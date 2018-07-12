@@ -1,0 +1,172 @@
+<div class="container">
+  <div style="text-align:center">
+    <h2>TwittShirt Maker</h2>
+    <p>Create your own t-shirt with any tweet</p>
+  </div>
+  <div class="row">
+    <div class="column">
+            <canvas id="canvas" width="530" height="600"></canvas>
+    </div>
+    <div class="column">
+    <!--  <form method="POST" action="/dash/checkout"> -->
+        <label for="fname">Tweet link</label>
+        <br>
+        <input type="text" id="Tlink" name="Tlink" placeholder="tweet URL...">
+        <input type="hidden" name="username" id="username"> <input type="hidden" name="tID" id="tID">
+        <input type="button" id="getTweet" class="btn-sm" value="Get Tweet" onclick="getTweet()">
+
+        <br>
+        
+        <input type="button" class="btn-sm" value="Delete Item" id="clear" name="clear"><br>
+        <label for="t-shirt-type">T-shirt type</label>
+        <select id="t-shirt-type" name="T-shirt type" onchange="changeTshirt()">
+                <option value="crew">Short sleeves</option>
+                <option value="long">Long sleeves</option>
+                <option value="hoodie">Hoodie</option>
+        </select>
+        <button type="submit">Check out</button>
+       
+        <br>
+        
+            <a id="lnkDownload" href="#"><input type="button" value="Save Image"></a>
+
+
+        
+    </div>
+  </div>
+</div>
+
+<script>
+        var type={
+                crew: 'http://localhost:3000/images/t-shirt-bg/crew_front.png',
+                long: 'http://localhost:3000/images/t-shirt-bg/mens_longsleeve_front.png',
+                hoodie:  'http://localhost:3000/images/t-shirt-bg/mens_hoodie_front.png'
+                };
+        fabric.Object.prototype.set({
+                transparentCorners: false,
+                cornerColor: 'rgba(102,153,255,0.5)',
+                cornerSize: 12,
+                padding: 5
+        });
+
+        // initialize fabric canvas and assign to global windows object for debug
+        var canvas = window._canvas = new fabric.Canvas('canvas');
+        canvas.setBackgroundColor('rgba(255,255,255,255)',canvas.renderAll.bind(canvas));
+
+        {{!-- var filter =new fabric.Image.filters.HueRotation({
+                rotaions: -0.11181753203630374 
+        }); --}}
+        canvas.setBackgroundImage('http://localhost:3000/images/t-shirt-bg/crew_front.png', canvas.renderAll.bind(canvas), {
+                backgroundImageStretch: false
+        });
+       // canvas.filters.push(filter);
+       // canvas.applyFilters();
+        var imgInstance = new fabric.Image("http://localhost:3000/images/t-shirt-bg/crew_front.png", {
+                left: 100,
+                top: 100,
+                angle: 30,
+                opacity: 0.85
+        });
+        function getTweet(){
+                canvas.add(imgInstance);
+                var link = $('#Tlink').val();
+                var regex = /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)$/;
+                if(regex.test(link)){
+                        var id = link.match( /\d{19}/g);
+                        var username = link.match(/(?:\#)?(\w+)/g);
+                        console.log(' test :http://localhost:3000/getTweet/username='+username[3]+"&id="+id);
+                        var tweet  = new fabric.Image.fromURL('http://localhost:3000/getTweet/username='+username[3]+"&id="+id,function(img){
+                        console.log(img.height);
+                        console.log(img.width);
+                        img.set({
+                                top: canvas.height/img.height,
+                                left: canvas.width/img.width,
+                                scaleY:  0.5,
+                                scaleX: 0.5,
+                                opacity : 1 
+                        });
+                        canvas.add(img);
+                });
+                }
+                else{
+                        alert('Enter a valid link');
+                }
+               
+        }
+
+        function changeTshirt(){
+                var id = document.getElementById('t-shirt-type').value;               
+              switch(id){
+                      case 'crew':
+                                console.log('crew');
+                                canvas.setBackgroundImage(type.crew, canvas.renderAll.bind(canvas), {
+                                        backgroundImageStretch: false
+                                });
+                                break;
+                      case 'long':
+                                console.log('long');
+                                canvas.setBackgroundImage(type.long, canvas.renderAll.bind(canvas), {
+                                        backgroundImageStretch: false
+                                });                   
+                                break;
+                      case 'hoodie':
+                                console.log('hoddie');
+                                canvas.setBackgroundImage(type.hoodie, canvas.renderAll.bind(canvas), {
+                                        backgroundImageStretch: false
+                                });                  
+                                break;
+                      default : 
+                                console.log('default');
+                                canvas.setBackgroundImage(type.crew, canvas.renderAll.bind(canvas), {
+                                        backgroundImageStretch: false
+                                });                              
+                                break;
+
+              }
+        }
+        $('#clear').click(function(){
+                console.log('test');
+                canvas.isDrawingMode = false;
+                deleteObjects();
+        });
+        
+                
+
+               
+       var imageSaver = document.getElementById('lnkDownload');
+                imageSaver.addEventListener('click', saveImage, false);
+
+                function saveImage(e) {
+                this.href = canvas.toDataURL({
+                        format: 'png',
+                        quality: 1.0
+                });
+                this.download = 'canvas.png'
+        }
+        function deleteObjects(){
+	var activeObject = canvas.getActiveObject(),
+        activeGroup = canvas.getActiveGroup();
+        if (activeObject) {
+                if (confirm('Are you sure?')) {
+                canvas.remove(activeObject);
+                }
+        }
+        else if (activeGroup) {
+                if (confirm('Are you sure?')) {
+                var objectsInGroup = activeGroup.getObjects();
+                canvas.discardActiveGroup();
+                objectsInGroup.forEach(function(object) {
+                canvas.remove(object);
+                });
+                }
+                }
+        }
+        function getSelection(){
+                return canvas.getActiveObject() == null ? canvas.getActiveGroup() : canvas.getActiveObject()
+        }
+</script>
+{{!-- 
+        canvas.setBackgroundImage('http://fabricjs.com/assets/jail_cell_bars.png', canvas.renderAll.bind(canvas), {
+        backgroundImageOpacity: 0.5,
+        backgroundImageStretch: false
+}); --}}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <style>
+            h2{
+                font-family: 'Poppins', sans-serif;
+            }
+          #Tlink{
+            width: 50%;
+             padding: 12px;
+              border: 1px solid #ccc;
+              margin-top: 6px;
+              margin-bottom: 16px;
+              resize: vertical;
+
+          }
+         
+         #clear{
+            width: 25%;
+             padding: 12px;
+              border: 1px solid #ccc;
+              margin-top: 6px;
+              margin-bottom: 16px;
+              resize: vertical;
+
+          }
+
+          #tshirt {
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+            width:380px;
+            height:480px;
+         }
+          body {
+            font-family: Arial, Helvetica, sans-serif;
+          }
+
+          * {
+              box-sizing: border-box;
+          }
+
+          /* Style inputs */
+          input[type=text], select, textarea {
+              width: 100%;
+              padding: 12px;
+              border: 1px solid #ccc;
+              margin-top: 6px;
+              margin-bottom: 16px;
+              resize: vertical;
+          }
+          input[type=submit],input[type=button] {
+              background-color: #42a4f4 ;
+              color: white;
+              padding: 12px 20px;
+              border: none;
+              cursor: pointer;
+              border-radius:8px; 
+          }
+
+          input[type=submit]:hover ,input[type=button]:hover{
+              background-color: #0088f7 ;
+          }
+
+          /* Style the container/contact section */
+          .container {
+              border-radius: 5px;
+              background-color: #f2f2f2;
+              padding: 10px;
+          }
+
+          /* Create two columns that float next to eachother */
+          .column {
+              float: left;
+              width: 50%;
+              margin-top: 6px;
+              padding: 20px;
+          }
+
+          /* Clear floats after the columns */
+          .row:after {
+              content: "";
+              display: table;
+              clear: both;
+          }
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .column, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}
+        </style>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous">
+    </script>
+    <script src="/javascripts/fabric.min.js"></script>
+    <script src="/javascripts/jcanvas.min.js"></script>
+
+
+  </head>
+  <body>
+    
+    {{>header}}
+    {{{body}}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   
+  </body>
+</html>
