@@ -15,24 +15,7 @@ router.post('/dash/submit',function (req,res,next) {
   console.log('test00');
   res.render('dash');
   });
-router.get('/getTweet',function(req,res,next){
- 
-  path =__dirname+'/Tweet.png';
-  console.log(path);
-  ss.default('https://twitter.com/CaseyNeistat/status/1016711895095693314',__dirname+"/tweet.png").then(()=>{
-    console.log("sucess")
-    res.sendFile(path,function (err) {
-      if(err){
-        next(err);
-      }   else{
-  
-      }
-    });
-  }).catch(err=>{
-    console.error("error");
-  });
-  
-});
+
 
 router.post('/dash/checkout',function(req,res,next){
         var tslink = req.body.Tlink;
