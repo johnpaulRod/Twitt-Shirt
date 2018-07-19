@@ -7,3 +7,11 @@ and also you dont have to go this route .. you can use normal html+php+apache co
  screenshot-tweet
  express-handelbars
 
+steps :
+install nodejs
+download the project
+go to the root directory of the project
+open cmd line and type : npm install 
+                         npm start
+the server runs on port 3000
+                         
